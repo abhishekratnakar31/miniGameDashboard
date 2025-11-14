@@ -138,8 +138,7 @@ import { searchGamesURL } from "../utils/rawg";
 import SearchResults from "../components/SearchResults";
 import ChartsSection from "../sections/ChartsSection";
 
-
-
+import TwitchSection from "../sections/TwitchSection";
 
 
 export default function Home() {
@@ -251,7 +250,7 @@ export default function Home() {
       </section>
 
       <section id="twitch">
-        <TwitchStub />
+        <TwitchSection />
       </section>
     </div>
   );
