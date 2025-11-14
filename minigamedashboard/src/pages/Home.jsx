@@ -131,10 +131,27 @@ import ChartsStub from "../sections/ChartsStub";
 import TwitchStub from "../sections/TwitchStub";
 import AboutSection from "../sections/AboutSection";
 import TrendingSection from "../sections/TrendingSection";
+import { useState } from "react";
+import useDebounce from "../hooks/useDebounce";
+import useFetch from "../hooks/useFetch";
+import { searchGamesURL } from "../utils/rawg";
+import SearchResults from "../components/SearchResults";
+import ChartsSection from "../sections/ChartsSection";
+
+
 
 
 
 export default function Home() {
+      const [query, setQuery] = useState("");
+  const debounced = useDebounce(query, 400);
+
+  const { data: searchData } = useFetch(
+    debounced ? searchGamesURL(debounced) : null
+  );
+
+  const results = searchData?.results || [];
+
   const heroRef = useRef(null);
 
   useEffect(() => {
@@ -173,7 +190,7 @@ export default function Home() {
             </p>
 
             {/* Search */}
-            <div className="mt-6 hero-search">
+            {/* <div className="mt-6 hero-search">
               <motion.input
                 whileFocus={{ scale: 1.03 }}
                 transition={{ type: "spring", stiffness: 200 }}
@@ -181,7 +198,30 @@ export default function Home() {
                 placeholder="Search games..."
                 className="w-full md:w-3/4 bg-gray-800 border border-gray-700 rounded-md px-4 py-3 focus:outline-none"
               />
-            </div>
+            </div> */}
+            <div className="mt-6 hero-search relative">
+  <motion.input
+    whileFocus={{ scale: 1.03 }}
+    transition={{ type: "spring", stiffness: 200 }}
+    type="text"
+    value={query}
+    onChange={(e) => setQuery(e.target.value)}
+    placeholder="Search games..."
+    className="bg-gray-800 border border-gray-700 px-4 py-3 rounded-lg w-full md:w-3/4 focus:outline-none"
+  />
+
+  {/* Live Search Dropdown */}
+  {query.length > 0 && (
+    <SearchResults
+      results={results}
+      onSelect={(game) => {
+        console.log("Selected game:", game);
+        setQuery("");
+      }}
+    />
+  )}
+</div>
+
           </div>
 
           {/* RIGHT: image placeholder */}
@@ -206,7 +246,8 @@ export default function Home() {
       </section>
 
       <section id="charts">
-        <ChartsStub />
+        <ChartsSection />
+
       </section>
 
       <section id="twitch">
