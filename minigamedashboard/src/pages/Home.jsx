@@ -278,10 +278,14 @@ import SearchResults from "../components/SearchResults";
 import ChartsSection from "../sections/ChartsSection";
 
 import TwitchSection from "../sections/TwitchSection";
+<<<<<<< HEAD
 >>>>>>> 0309b9272421ae54a74764d356b77f5779ed6f18
 
 // Register GSAP plugin
 gsap.registerPlugin(ScrollTrigger);
+=======
+
+>>>>>>> 0309b9272421ae54a74764d356b77f5779ed6f18
 
 export default function Home() {
   const [query, setQuery] = useState("");
@@ -405,12 +409,16 @@ export default function Home() {
         <ChartsSection />
       </section>
 
+<<<<<<< HEAD
 
       {/* TWITCH */}
       <section id="twitch" className="fade-section">
 =======
      
 
+=======
+      <section id="twitch">
+>>>>>>> 0309b9272421ae54a74764d356b77f5779ed6f18
         <TwitchSection />
       </section>
 
