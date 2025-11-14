@@ -119,6 +119,98 @@
 //   );
 // }
 
+// import { useState } from "react";
+// import { motion } from "framer-motion";
+// import useFetch from "../hooks/useFetch";
+// import { trendingGamesURL } from "../utils/rawg";
+// import GameModal from "../components/GameModal";
+
+// export default function TrendingSection() {
+//   const { data, loading, error } = useFetch(trendingGamesURL);
+
+//   const [selected, setSelected] = useState(null);
+//   const [favorites, setFavorites] = useState(
+//     JSON.parse(localStorage.getItem("favorites") || "[]")
+//   );
+  
+//   function toggleFavorite(game) {
+//     let updated = [];
+  
+//     if (favorites.some((fav) => fav.id === game.id)) {
+//       updated = favorites.filter((fav) => fav.id !== game.id);
+//     } else {
+//       updated = [...favorites, game];
+//     }
+  
+//     setFavorites(updated);
+//     localStorage.setItem("favorites", JSON.stringify(updated));
+//   }
+
+//   if (loading) return <div className="text-gray-300">Loading trending games...</div>;
+//   if (error) return <div className="text-red-500">Error fetching games.</div>;
+
+//   const games = data?.results || [];
+
+//   const container = {
+//     hidden: {},
+//     show: {
+//       transition: {
+//         staggerChildren: 0.15,
+//       },
+//     },
+//   };
+
+//   const card = {
+//     hidden: { opacity: 0, y: 20 },
+//     show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+//   };
+
+//   return (
+//     <motion.div
+//       initial="hidden"
+//       whileInView="show"
+//       viewport={{ once: true }}
+//       variants={container}
+//       className="space-y-4"
+//     >
+//       <h2 className="text-2xl font-semibold">Trending Games</h2>
+
+//       <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+//         {games.map((game) => (
+//           <motion.div
+//             key={game.id}
+//             variants={card}
+//             whileHover={{ scale: 1.05 }}
+//             onClick={() => setSelected(game)}
+//             className="bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:border-white/20 transition cursor-pointer"
+//           >
+//             <img
+//               src={game.background_image}
+//               alt={game.name}
+//               className="w-full h-40 object-cover"
+//             />
+
+//             <div className="p-4">
+//               <h3 className="text-lg font-semibold">{game.name}</h3>
+
+//               <div className="mt-2 flex items-center justify-between">
+//                 <span className="text-gray-400 text-sm">Rating: {game.rating}</span>
+
+//                 <span className="text-xs bg-purple-700/40 text-purple-300 px-2 py-1 rounded-md border border-purple-600/30">
+//                   {game.metacritic ? `MC: ${game.metacritic}` : "No MC"}
+//                 </span>
+//               </div>
+//             </div>
+//           </motion.div>
+//         ))}
+//       </div>
+
+//       {selected && (
+//         <GameModal game={selected} onClose={() => setSelected(null)} />
+//       )}
+//     </motion.div>
+//   );
+// }
 import { useState } from "react";
 import { motion } from "framer-motion";
 import useFetch from "../hooks/useFetch";
@@ -129,6 +221,24 @@ export default function TrendingSection() {
   const { data, loading, error } = useFetch(trendingGamesURL);
 
   const [selected, setSelected] = useState(null);
+
+  // FAVORITES SYSTEM
+  const [favorites, setFavorites] = useState(
+    JSON.parse(localStorage.getItem("favorites") || "[]")
+  );
+
+  function toggleFavorite(game) {
+    let updated = [];
+
+    if (favorites.some((fav) => fav.id === game.id)) {
+      updated = favorites.filter((fav) => fav.id !== game.id);
+    } else {
+      updated = [...favorites, game];
+    }
+
+    setFavorites(updated);
+    localStorage.setItem("favorites", JSON.stringify(updated));
+  }
 
   if (loading) return <div className="text-gray-300">Loading trending games...</div>;
   if (error) return <div className="text-red-500">Error fetching games.</div>;
@@ -149,6 +259,8 @@ export default function TrendingSection() {
     show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
   };
 
+  
+
   return (
     <motion.div
       initial="hidden"
@@ -160,25 +272,59 @@ export default function TrendingSection() {
       <h2 className="text-2xl font-semibold">Trending Games</h2>
 
       <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {games.map((game) => (
+        {/* {games.map((game) => (
           <motion.div
             key={game.id}
             variants={card}
             whileHover={{ scale: 1.05 }}
             onClick={() => setSelected(game)}
-            className="bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:border-white/20 transition cursor-pointer"
-          >
+            className="relative bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:border-white/20 transition cursor-pointer"
+          > */}
+
+{games.map((game) => (
+  <motion.div
+    key={game.id}
+    variants={card}
+    whileHover={{
+      scale: 1.05,
+      rotate: 0.5,
+      boxShadow: "0 0 20px rgba(124, 58, 237, 0.4)"
+    }}
+    className="
+      relative 
+      bg-gray-100 dark:bg-gray-800
+      border border-gray-300 dark:border-gray-700
+      rounded-xl overflow-hidden cursor-pointer
+      transition
+    "
+    onClick={() => setSelected(game)}
+  >
+            {/* FAVORITE BUTTON */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleFavorite(game);
+              }}
+              className="absolute top-3 right-3 text-xl"
+            >
+              {favorites.some((fav) => fav.id === game.id) ? "❤️" : "🤍"}
+            </button>
+
+            {/* GAME IMAGE */}
             <img
               src={game.background_image}
               alt={game.name}
               className="w-full h-40 object-cover"
             />
 
+            {/* GAME INFO */}
             <div className="p-4">
               <h3 className="text-lg font-semibold">{game.name}</h3>
 
               <div className="mt-2 flex items-center justify-between">
-                <span className="text-gray-400 text-sm">Rating: {game.rating}</span>
+                <span className="text-gray-400 text-sm">
+                  Rating: {game.rating}
+                </span>
 
                 <span className="text-xs bg-purple-700/40 text-purple-300 px-2 py-1 rounded-md border border-purple-600/30">
                   {game.metacritic ? `MC: ${game.metacritic}` : "No MC"}
@@ -189,9 +335,7 @@ export default function TrendingSection() {
         ))}
       </div>
 
-      {selected && (
-        <GameModal game={selected} onClose={() => setSelected(null)} />
-      )}
+      {selected && <GameModal game={selected} onClose={() => setSelected(null)} />}
     </motion.div>
   );
 }

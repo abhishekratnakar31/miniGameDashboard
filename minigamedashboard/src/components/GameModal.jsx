@@ -18,7 +18,8 @@ export default function GameModal({ game, onClose }) {
 
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-white text-xl"
+           className="px-4 py-2 rounded-lg bg-primary text-white hover:bg-purple-700 
+           transition-all shadow-md hover:shadow-lg"
           >
             ✕
           </button>

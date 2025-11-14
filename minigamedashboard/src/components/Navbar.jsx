@@ -9,14 +9,15 @@ export default function Navbar() {
           <div className="text-xl font-semibold">EsportsDash</div>
         </div>
 
-        <nav className="hidden md:flex gap-6 items-center text-sm text-gray-300">
+        <nav className="bg-white dark:bg-gray-800 border-b border-gray-300 dark:border-gray-700 px-4 py-3">
           <a href="#trending" className="hover:text-white">Trending</a>
           <a href="#charts" className="hover:text-white">Charts</a>
           <a href="#twitch" className="hover:text-white">Twitch</a>
         </nav>
 
         <div className="flex items-center gap-3">
-          <button className="px-3 py-1 rounded-md border border-gray-700 text-sm">Sign in</button>
+          <button className="px-4 py-2 rounded-lg bg-primary text-white hover:bg-purple-700 
+           transition-all shadow-md hover:shadow-lg">Sign in</button>
         </div>
       </div>
     </header>

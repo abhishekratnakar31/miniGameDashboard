@@ -123,27 +123,168 @@
 //   );
 // }
 
-import { useEffect, useRef } from "react";
+// import { useEffect, useRef } from "react";
+// import gsap from "gsap";
+// import { motion } from "framer-motion";
+// import TrendingStub from "../sections/TrendingStub";
+// import ChartsStub from "../sections/ChartsStub";
+// import TwitchStub from "../sections/TwitchStub";
+// import AboutSection from "../sections/AboutSection";
+// import TrendingSection from "../sections/TrendingSection";
+// import { useState } from "react";
+// import useDebounce from "../hooks/useDebounce";
+// import useFetch from "../hooks/useFetch";
+// import { searchGamesURL } from "../utils/rawg";
+// import SearchResults from "../components/SearchResults";
+// import ChartsSection from "../sections/ChartsSection";
+// import ThemeToggle from "../components/ThemeToggle";
+
+
+
+
+// export default function Home() {
+//       const [query, setQuery] = useState("");
+//   const debounced = useDebounce(query, 400);
+
+//   const { data: searchData } = useFetch(
+//     debounced ? searchGamesURL(debounced) : null
+//   );
+
+//   const results = searchData?.results || [];
+
+//   const heroRef = useRef(null);
+
+//   useEffect(() => {
+//     const el = heroRef.current;
+
+//     // GSAP hero text animation
+//     gsap.fromTo(
+//       el.querySelectorAll(".hero-text"),
+//       { opacity: 0, y: 30 },
+//       { opacity: 1, y: 0, stagger: 0.15, duration: 0.8, ease: "power3.out" }
+//     );
+
+//     // GSAP search animation
+//     gsap.fromTo(
+//       el.querySelector(".hero-search"),
+//       { opacity: 0, y: 20 },
+//       { opacity: 1, y: 0, delay: 0.4, duration: 0.8, ease: "power3.out" }
+//     );
+//   }, []);
+
+//   return (
+//     <div className="max-w-6xl mx-auto px-4 py-10 space-y-20">
+
+//       {/* HERO SECTION */}
+//       <section ref={heroRef} className="pt-6">
+//         <div className="grid md:grid-cols-2 gap-8 items-center">
+
+//           {/* LEFT: text */}
+//           <div>
+//             <h1 className="hero-text text-4xl md:text-5xl font-extrabold leading-tight">
+//               Esports & Gaming Stats Dashboard
+//             </h1>
+
+//             <p className="hero-text mt-4 text-gray-700 dark:text-gray-300 max-w-xl">
+//               Real-time trends, ratings, and live streams — fast, responsive and made for judges who like shiny things.
+//             </p>
+
+//             {/* Search */}
+//             {/* <div className="mt-6 hero-search">
+//               <motion.input
+//                 whileFocus={{ scale: 1.03 }}
+//                 transition={{ type: "spring", stiffness: 200 }}
+//                 type="text"
+//                 placeholder="Search games..."
+//                 className="w-full md:w-3/4 bg-gray-800 border border-gray-700 rounded-md px-4 py-3 focus:outline-none"
+//               />
+//             </div> */}
+//             <div className="mt-6 hero-search relative">
+//   <motion.input
+//     whileFocus={{ scale: 1.03 }}
+//     transition={{ type: "spring", stiffness: 200 }}
+//     type="text"
+//     value={query}
+//     onChange={(e) => setQuery(e.target.value)}
+//     placeholder="Search games..."
+//     className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 px-4 py-3 rounded-lg w-full md:w-3/4 focus:outline-none"
+//   />
+
+//   {/* Live Search Dropdown */}
+//   {query.length > 0 && (
+//     <SearchResults
+//       results={results}
+//       onSelect={(game) => {
+//         console.log("Selected game:", game);
+//         setQuery("");
+//       }}
+//     />
+//   )}
+// </div>
+
+//           </div>
+
+//           {/* RIGHT: image placeholder */}
+//           <div className="hidden md:flex justify-center">
+//             <div className="w-full max-w-md h-56 bg-gradient-to-tr from-gray-800 to-gray-700 rounded-xl flex items-center justify-center text-center text-gray-300">
+//               Placeholder for hero image / animation
+//             </div>
+//           </div>
+//         </div>
+//       </section>
+
+//       {/* ABOUT CARDS */}
+//       <section>
+//   <AboutSection />
+// </section>
+
+
+//       {/* MAIN CONTENT SECTIONS */}
+//       <section id="trending">
+//    <TrendingSection />
+
+//       </section>
+
+//       <section id="charts">
+//         <ChartsSection />
+
+//       </section>
+
+//       <section id="twitch">
+//         <TwitchStub />
+//       </section>
+//       <ThemeToggle/>
+//     </div>
+//   );
+// }
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion } from "framer-motion";
-import TrendingStub from "../sections/TrendingStub";
-import ChartsStub from "../sections/ChartsStub";
-import TwitchStub from "../sections/TwitchStub";
+
 import AboutSection from "../sections/AboutSection";
 import TrendingSection from "../sections/TrendingSection";
-import { useState } from "react";
+import ChartsSection from "../sections/ChartsSection";
+import SearchResults from "../components/SearchResults";
+import ThemeToggle from "../components/ThemeToggle";
+import TwitchSection from "../sections/TwitchSection";
+
 import useDebounce from "../hooks/useDebounce";
 import useFetch from "../hooks/useFetch";
 import { searchGamesURL } from "../utils/rawg";
+<<<<<<< HEAD
+=======
 import SearchResults from "../components/SearchResults";
 import ChartsSection from "../sections/ChartsSection";
 
+import TwitchSection from "../sections/TwitchSection";
+>>>>>>> 0309b9272421ae54a74764d356b77f5779ed6f18
 
-
-
+// Register GSAP plugin
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
-      const [query, setQuery] = useState("");
+  const [query, setQuery] = useState("");
   const debounced = useDebounce(query, 400);
 
   const { data: searchData } = useFetch(
@@ -151,108 +292,130 @@ export default function Home() {
   );
 
   const results = searchData?.results || [];
-
   const heroRef = useRef(null);
 
+  // HERO animations
   useEffect(() => {
     const el = heroRef.current;
 
-    // GSAP hero text animation
     gsap.fromTo(
       el.querySelectorAll(".hero-text"),
       { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, stagger: 0.15, duration: 0.8, ease: "power3.out" }
+      { opacity: 1, y: 0, stagger: 0.15, duration: 0.8 }
     );
 
-    // GSAP search animation
     gsap.fromTo(
       el.querySelector(".hero-search"),
       { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, delay: 0.4, duration: 0.8, ease: "power3.out" }
+      { opacity: 1, y: 0, delay: 0.4, duration: 0.8 }
+    );
+  }, []);
+
+  // SECTION fade animations
+  useEffect(() => {
+    gsap.fromTo(
+      ".fade-section",
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1,
+        y: 0,
+        stagger: 0.25,
+        duration: 0.7,
+        scrollTrigger: {
+          trigger: ".fade-section",
+          start: "top 85%",
+        },
+      }
     );
   }, []);
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-10 space-y-20">
 
-      {/* HERO SECTION */}
+      {/* HERO */}
       <section ref={heroRef} className="pt-6">
         <div className="grid md:grid-cols-2 gap-8 items-center">
 
-          {/* LEFT: text */}
+          {/* TEXT */}
           <div>
             <h1 className="hero-text text-4xl md:text-5xl font-extrabold leading-tight">
               Esports & Gaming Stats Dashboard
             </h1>
 
-            <p className="hero-text mt-4 text-gray-300 max-w-xl">
-              Real-time trends, ratings, and live streams — fast, responsive and made for judges who like shiny things.
+            <p className="hero-text mt-4 text-gray-700 dark:text-gray-300 max-w-xl">
+              Real-time trends, ratings, and live streams — fast, responsive and built for demos.
             </p>
 
-            {/* Search */}
-            {/* <div className="mt-6 hero-search">
+            {/* SEARCH */}
+            <div className="mt-6 hero-search relative">
               <motion.input
                 whileFocus={{ scale: 1.03 }}
                 transition={{ type: "spring", stiffness: 200 }}
                 type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search games..."
-                className="w-full md:w-3/4 bg-gray-800 border border-gray-700 rounded-md px-4 py-3 focus:outline-none"
+                className="
+                  w-full md:w-3/4 
+                  bg-white dark:bg-gray-800
+                  border border-gray-300 dark:border-gray-700
+                  text-gray-900 dark:text-gray-100
+                  px-4 py-3 rounded-lg
+                "
               />
-            </div> */}
-            <div className="mt-6 hero-search relative">
-  <motion.input
-    whileFocus={{ scale: 1.03 }}
-    transition={{ type: "spring", stiffness: 200 }}
-    type="text"
-    value={query}
-    onChange={(e) => setQuery(e.target.value)}
-    placeholder="Search games..."
-    className="bg-gray-800 border border-gray-700 px-4 py-3 rounded-lg w-full md:w-3/4 focus:outline-none"
-  />
 
-  {/* Live Search Dropdown */}
-  {query.length > 0 && (
-    <SearchResults
-      results={results}
-      onSelect={(game) => {
-        console.log("Selected game:", game);
-        setQuery("");
-      }}
-    />
-  )}
-</div>
-
+              {query.length > 0 && (
+                <SearchResults
+                  results={results}
+                  onSelect={() => setQuery("")}
+                />
+              )}
+            </div>
           </div>
 
-          {/* RIGHT: image placeholder */}
+          {/* IMAGE BOX */}
           <div className="hidden md:flex justify-center">
-            <div className="w-full max-w-md h-56 bg-gradient-to-tr from-gray-800 to-gray-700 rounded-xl flex items-center justify-center text-center text-gray-300">
-              Placeholder for hero image / animation
+            <div
+              className="
+                w-full max-w-md h-56 rounded-xl flex items-center justify-center
+                bg-gradient-to-tr
+                from-gray-200 to-gray-100
+                dark:from-gray-800 dark:to-gray-700
+                text-gray-700 dark:text-gray-300 
+              "
+            >
+              Placeholder for hero animation
             </div>
           </div>
         </div>
       </section>
 
-      {/* ABOUT CARDS */}
-      <section>
-  <AboutSection />
-</section>
-
-
-      {/* MAIN CONTENT SECTIONS */}
-      <section id="trending">
-   <TrendingSection />
-
+      {/* ABOUT */}
+      <section className="fade-section">
+        <AboutSection />
       </section>
 
-      <section id="charts">
+      {/* TRENDING */}
+      <section id="trending" className="fade-section">
+        <TrendingSection />
+      </section>
+
+      {/* CHARTS */}
+      <section id="charts" className="fade-section">
         <ChartsSection />
-
       </section>
 
-      <section id="twitch">
-        <TwitchStub />
+
+      {/* TWITCH */}
+      <section id="twitch" className="fade-section">
+=======
+     
+
+        <TwitchSection />
       </section>
+
+      {/* DARK MODE TOGGLE */}
+      <ThemeToggle />
     </div>
   );
 }
