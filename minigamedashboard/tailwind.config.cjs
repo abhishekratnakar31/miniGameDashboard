@@ -1,22 +1,6 @@
-// module.exports = {
-// darkMode: "class",
-//   content: [
-//     "./index.html",
-//     "./src/**/*.{js,jsx,ts,tsx}"
-//   ],
-//   theme: {
-//     extend: {
-//       colors: {
-//         primary: "#7c3aed", // purple-ish
-//         accent: "#06b6d4"
-//       }
-//     },
-//   },
-//   plugins: [],
-// };
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: "class",   // REQUIRED FOR MANUAL DARK MODE
+  darkMode: "class",
 
   content: [
     "./index.html",
@@ -26,8 +10,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#000000ff",
-        accent: "#000000ff",
+        // No need for custom black/white — Tailwind has perfect ones
       },
     },
   },
